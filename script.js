@@ -61,8 +61,8 @@ function recherche_ballon_yutampo(typeLogement, ecs){
     return 0;
 }
 
-//=RECHERCHEX(E26;P130:R130;P131:R131)
-function recherche_P_delivree_RAM(groupeExtRam, tableauRamPuissance){
+
+function recherche_p_delivree_RAM(groupeExtRam, tableauRamPuissance){
     for(let i = 0; i < tableauRamPuissance[0].length ; i++){
        
         if (groupeExtRam == tableauRamPuissance[0][i]){//recherche une correspondance dans le tableau
@@ -70,6 +70,72 @@ function recherche_P_delivree_RAM(groupeExtRam, tableauRamPuissance){
         }
     }
     window.alert("pas de correspondance trouvée pour RAM/P !");
+    return 0;
+}
+
+//=RECHERCHEX(E28;W40:W46;Y40:Y46)
+function recherche_p_delivree_gainable_jour(tailleGainJour,tableauUnitPdispJour){
+    for (let i = 0; i < tableauUnitPdispJour[0].length; i++){
+        if(tailleGainJour == tableauUnitPdispJour[0][i]){
+            return tableauUnitPdispJour[2][i];
+        }
+    }
+    window.alert("pas de ref trouvée pr unit/P dispo jour");
+    return 0;
+}
+
+
+
+
+
+//=RECHERCHEX(E28;P125:R125;P128:R128)
+function recherche_qv_delivree_gainable_jour(tailleGainJour,tableauRAD){
+    for(let i = 0; i< tableauRAD[0].length; i++){
+        if(tailleGainJour == tableauRAD[0][i]){
+            return tableauRAD[3][i];
+        }
+    }
+    window.alert("pas de ref pr qv dans RAD");
+    return 0;
+}
+//=RECHERCHEX(E28;P125:R125;P127:R127)
+function recherche_pression_sonore_gainable_jour(tailleGainJour,tableauRAD){
+    for(let i = 0; i< tableauRAD[0].length; i++){
+        if(tailleGainJour == tableauRAD[0][i]){
+            return tableauRAD[2][i];
+        }
+    }
+    window.alert("pas de ref pr press sonore dans RAD");
+    return 0;
+}
+//=RECHERCHEX(E32;W63:W68;Y63:Y68)
+function recherche_p_delivree_gainable_nuit(tailleGainNuit,tableauUnitPdispNuit){
+    for (let i = 0; i < tableauUnitPdispNuit[0].length; i++){
+        if(tailleGainNuit == tableauUnitPdispNuit[0][i]){
+            return tableauUnitPdispNuit[2][i];
+        }
+    }
+    window.alert("pas de ref trouvée pr unit/P dispo nuit");
+    return 0;
+}
+//=RECHERCHEX(E32;P125:R125;P128:R128)
+function recherche_qv_delivree_gainable_nuit(tailleGainNuit,tableauRAD){
+    for(let i = 0; i< tableauRAD[0].length; i++){
+        if(tailleGainNuit == tableauRAD[0][i]){
+            return tableauRAD[3][i];
+        }
+    }
+    window.alert("pas de ref pr press sonore dans RAD");
+    return 0;
+}
+//=RECHERCHEX(E32;P125:R125;P127:R127)
+function recherche_pression_sonore_gainable_nuit(tailleGainNuit,tableauRAD){
+    for(let i = 0; i< tableauRAD[0].length; i++){
+        if(tailleGainNuit == tableauRAD[0][i]){
+            return tableauRAD[2][i];
+        }
+    }
+    window.alert("pas de ref pr press sonore dans RAD");
     return 0;
 }
 
@@ -111,6 +177,25 @@ let tableauRamPuissance = [
     [4997, 6247, 8084]
 ];
 
+let tableauRAD = [
+    ["RAD-35RPE", "RAD-50RPE", "RAD-60RPE"],
+    [5, 6, 7],
+    [38, 35, 35],
+    [510, 1140, 1140]
+];
+
+let tableauUnitPdispJour = [
+    ["RAD-35RPE", "RAD-50RPE", "RAD-60RPE"],
+    [3.5, 5, 6],
+    [3160, 4777, 4997]
+];
+
+let tableauUnitPdispNuit = [
+    ["RAD-35RPE", "RAD-50RPE", "RAD-60RPE"],
+    [3.5, 5, 6],
+    [3160, 4777, 4997]
+];
+
 
 console.log(ecs[2]);
 
@@ -136,19 +221,8 @@ let g11 = -5;
 let g12 = 20;
 let groupeExtRam = "RAM-90NYP5E";
 
-
-
-//tests des calculs
-//let g18 = recherche_g18(factDegivr, corrDegivr);
-//let g17 = recherche_g17(longEquivFrigo, corrTuyauChauff);
-//
-//let volume = calc_volume(84, 2.5, 47, 2.5);
-//let debitAirZoneJour = calc_debit_air_jour(84, 2.5, 5);
-//let debitAirZoneNuit = calc_debit_air_nuit(47, 2.5, 5);
-//let puissanceJour = calc_puissance_jour(84, 2.5, 0.8, 19, -4);
-//let puissanceNuit = calc_puissance_jour(47, 2.5, 0.8, 19, -4);
-//let puissanceInstalle = calc_puissance_a_installer(puissanceJour, puissanceNuit, g17, g18, coefMajoration);
-//let ballonYutampo = calc_ballon_yutampo(typeLogement,ecs);
+let tailleGainJour = "RAD-50RPE";
+let tailleGainNuit = "RAD-50RPE";
 
 let g17 = recherche_g17(longEquivFrigo, corrTuyauChauff);
 let g18 = recherche_g18(factDegivr, corrDegivr);
@@ -160,7 +234,16 @@ let puissanceJour = calc_puissance_jour(surfaceJour, hauteurJour, g10, tempInt, 
 let puissanceNuit = calc_puissance_nuit(surfaceNuit, hauteurNuit, g10, tempInt, tempExt);
 let puissanceInstalle = calc_puissance_a_installer(puissanceJour, puissanceNuit, g17, g18, coefMajoration);
 let ballonYutampo = recherche_ballon_yutampo(typeLogement,ecs);
-let puissDelivreeRam = recherche_P_delivree_RAM(groupeExtRam, tableauRamPuissance);
+let puissDelivreeRam = recherche_p_delivree_RAM(groupeExtRam, tableauRamPuissance);
+
+let puissDelivGainJour = recherche_p_delivree_gainable_jour(tailleGainJour,tableauUnitPdispJour);
+let qvJour = recherche_qv_delivree_gainable_jour(tailleGainJour,tableauRAD);
+let pressionSonoreJour = recherche_pression_sonore_gainable_jour(tailleGainJour,tableauRAD);
+
+let puissDelivGainNuit = recherche_p_delivree_gainable_nuit(tailleGainNuit,tableauUnitPdispNuit);
+let qvNuit = recherche_qv_delivree_gainable_nuit(tailleGainNuit,tableauRAD);
+let pressionSonoreNuit = recherche_pression_sonore_gainable_nuit(tailleGainNuit,tableauRAD);
+
 //affichage des tests
 console.log("volume : " + volume);
 console.log("debitairzonejour : " + debitAirZoneJour);
@@ -174,3 +257,6 @@ console.log("g18 : " + g18);
 
 console.log("ballon yutampo :" + ballonYutampo);
 console.log("puissance delivre ram = " + puissDelivreeRam);
+
+console.log("tests finaux pr aujourdhui raraarar");
+console.log(puissDelivGainJour, qvJour, pressionSonoreJour, puissDelivGainNuit, qvNuit, pressionSonoreNuit);
