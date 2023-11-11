@@ -5,24 +5,16 @@ function calc_volume (surfaceJour, hauteurJour, surfaceNuit, hauteurNuit) {//  m
     return (surfaceJour*hauteurJour) + (surfaceNuit * hauteurNuit);
 };
 
-function calc_debit_air_jour(surfaceJour, hauteurJour, tauxBrassage){//  m3/h
-    return (surfaceJour * hauteurJour * tauxBrassage);
-}
-
-function calc_debit_air_nuit(surfaceNuit, hauteurNuit, tauxBrassage){//  m3/h
-    return (surfaceNuit * hauteurNuit * tauxBrassage);
+function calc_debit_air(surface, hauteur, tauxBrassage){//  m3/h
+    return (surface * hauteur * tauxBrassage);
 }
 
 
-function calc_puissance_jour(surfaceJour, hauteurJour, g10, tempInt, tempExt){// W
-    console.log(surfaceJour, hauteurJour, g10, tempInt, tempExt);
-    return surfaceJour * hauteurJour * g10 * (tempInt-tempExt);
-}
 
-function calc_puissance_nuit(surfaceNuit, hauteurNuit, g10, tempInt, tempExt){// W
-    return surfaceNuit * hauteurNuit * g10 * (tempInt-tempExt);
+function calc_puissance(surface, hauteur, g10, tempInt, tempExt){// W
+    
+    return surface * hauteur * g10 * (tempInt-tempExt);
 }
-
 
 
 function calc_puissance_a_installer(puissanceJour, puissanceNuit, g17, g18, coefMajoration){//  W
@@ -228,10 +220,10 @@ let g17 = recherche_g17(longEquivFrigo, corrTuyauChauff);
 let g18 = recherche_g18(factDegivr, corrDegivr);
 
 let volume = calc_volume(surfaceJour, hauteurJour, surfaceNuit, hauteurNuit);
-let debitAirZoneJour = calc_debit_air_jour(surfaceJour, hauteurJour, tauxBrassage);
-let debitAirZoneNuit = calc_debit_air_nuit(surfaceNuit, hauteurNuit, tauxBrassage);
-let puissanceJour = calc_puissance_jour(surfaceJour, hauteurJour, g10, tempInt, tempExt);
-let puissanceNuit = calc_puissance_nuit(surfaceNuit, hauteurNuit, g10, tempInt, tempExt);
+let debitAirZoneJour = calc_debit_air(surfaceJour, hauteurJour, tauxBrassage);
+let debitAirZoneNuit = calc_debit_air(surfaceNuit, hauteurNuit, tauxBrassage);
+let puissanceJour = calc_puissance(surfaceJour, hauteurJour, g10, tempInt, tempExt);
+let puissanceNuit = calc_puissance(surfaceNuit, hauteurNuit, g10, tempInt, tempExt);
 let puissanceInstalle = calc_puissance_a_installer(puissanceJour, puissanceNuit, g17, g18, coefMajoration);
 let ballonYutampo = recherche_ballon_yutampo(typeLogement,ecs);
 let puissDelivreeRam = recherche_p_delivree_RAM(groupeExtRam, tableauRamPuissance);
