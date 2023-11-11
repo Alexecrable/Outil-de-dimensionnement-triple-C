@@ -21,82 +21,16 @@ function calc_puissance_a_installer(puissanceJour, puissanceNuit, g17, g18, coef
     return ((puissanceJour+puissanceNuit) / g17 / g18) * coefMajoration;
 }
 
-function recherche_g17(longEquivFrigo, corrTuyauChauff){ 
-    for(let i = 0; i < corrTuyauChauff[0].length ; i++){
-        if (longEquivFrigo === corrTuyauChauff[0][i]){//recherche une correspondance dans le tableau de correction tuyau/chaufferie
-            return corrTuyauChauff[1][i];
-        }
-    }
-    window.alert("pas de correspondance trouvée pour g17 !");
-    return 0;
-}
 
-
-function recherche_g18(factDegivr, corrDegivr){
-    for(let i = 0; i < corrDegivr[0].length ; i++){
-        if (factDegivr === corrDegivr[0][i]){//recherche une correspondance dans le tableau de correction degivrage
-            return corrDegivr[1][i];
-        }
-    }
-    window.alert("pas de correspondance trouvée pour g18 !");
-    return 0;
-}
-//
-function recherche_ballon_yutampo(typeLogement, ecs){
-    for(let i = 0; i < ecs[0].length ; i++){
-       
-        if (typeLogement == ecs[0][i]){//recherche une correspondance dans le tableau ecs
-            return ecs[2][i];
-        }
-    }
-    window.alert("pas de correspondance trouvée dans ecs !");
-    return 0;
-}
-
-
-function recherche_p_delivree_RAM(groupeExtRam, tableauRamPuissance){
-    for(let i = 0; i < tableauRamPuissance[0].length ; i++){
-       
-        if (groupeExtRam == tableauRamPuissance[0][i]){//recherche une correspondance dans le tableau
-            return tableauRamPuissance[1][i];
-        }
-    }
-    window.alert("pas de correspondance trouvée pour RAM/P !");
-    return 0;
-}
-
-
-function recherche_p_delivree_gainable(tailleGain,tableauUnitPdisp){
-    for (let i = 0; i < tableauUnitPdispJour[0].length; i++){
-        if(tailleGain == tableauUnitPdispJour[0][i]){
-            return tableauUnitPdisp[2][i];
-        }
-    }
-    window.alert("pas de ref trouvée pr unit/P dispo");
-    return 0;
-}
-
-
-function recherche_qv_delivree_gainable(tailleGain,tableauRAD){
-    for(let i = 0; i< tableauRAD[0].length; i++){
-        if(tailleGain == tableauRAD[0][i]){
-            return tableauRAD[3][i];
-        }
-    }
-    window.alert("pas de ref pr qv dans RAD");
-    return 0;
-}
-
-function recherche_pression_sonore_gainable(tailleGain,tableauRAD){
-    for(let i = 0; i< tableauRAD[0].length; i++){
-        if(tailleGain == tableauRAD[0][i]){
-            return tableauRAD[2][i];
+function recherche(reference, tableau, indiceRetour){
+    for(let i = 0; i< tableau[0].length; i++){
+        if(reference == tableau[0][i]){
+            return tableau[indiceRetour][i];
         }
     }
     window.alert("pas de ref pr press sonore dans RAD");
     return 0;
 }
-
 
 //definition des valeurs de base
 
@@ -183,8 +117,8 @@ let groupeExtRam = "RAM-90NYP5E";
 let tailleGainJour = "RAD-50RPE";
 let tailleGainNuit = "RAD-50RPE";
 
-let g17 = recherche_g17(longEquivFrigo, corrTuyauChauff);
-let g18 = recherche_g18(factDegivr, corrDegivr);
+let g17 = recherche(longEquivFrigo, corrTuyauChauff,1);
+let g18 = recherche(factDegivr, corrDegivr,1);
 
 let volume = calc_volume(surfaceJour, hauteurJour, surfaceNuit, hauteurNuit);
 let debitAirZoneJour = calc_debit_air(surfaceJour, hauteurJour, tauxBrassage);
@@ -192,16 +126,17 @@ let debitAirZoneNuit = calc_debit_air(surfaceNuit, hauteurNuit, tauxBrassage);
 let puissanceJour = calc_puissance(surfaceJour, hauteurJour, g10, tempInt, tempExt);
 let puissanceNuit = calc_puissance(surfaceNuit, hauteurNuit, g10, tempInt, tempExt);
 let puissanceInstalle = calc_puissance_a_installer(puissanceJour, puissanceNuit, g17, g18, coefMajoration);
-let ballonYutampo = recherche_ballon_yutampo(typeLogement,ecs);
-let puissDelivreeRam = recherche_p_delivree_RAM(groupeExtRam, tableauRamPuissance);
 
-let puissDelivGainJour = recherche_p_delivree_gainable(tailleGainJour,tableauUnitPdispJour);
-let qvJour = recherche_qv_delivree_gainable(tailleGainJour,tableauRAD);
-let pressionSonoreJour = recherche_pression_sonore_gainable(tailleGainJour,tableauRAD);
+let ballonYutampo = recherche(typeLogement,ecs,2);
+let puissDelivreeRam = recherche(groupeExtRam, tableauRamPuissance,1);
 
-let puissDelivGainNuit = recherche_p_delivree_gainable(tailleGainNuit,tableauUnitPdispNuit);
-let qvNuit = recherche_qv_delivree_gainable(tailleGainNuit,tableauRAD);
-let pressionSonoreNuit = recherche_pression_sonore_gainable(tailleGainNuit,tableauRAD);
+let puissDelivGainJour = recherche(tailleGainJour,tableauUnitPdispJour,2);
+let qvJour = recherche(tailleGainJour,tableauRAD,3);
+let pressionSonoreJour = recherche(tailleGainJour,tableauRAD,2);
+
+let puissDelivGainNuit = recherche(tailleGainNuit,tableauUnitPdispNuit,2);
+let qvNuit = recherche(tailleGainNuit,tableauRAD,3);
+let pressionSonoreNuit = recherche(tailleGainNuit,tableauRAD,2);
 
 //affichage des tests
 console.log("volume : " + volume);
