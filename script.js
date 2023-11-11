@@ -65,71 +65,38 @@ function recherche_p_delivree_RAM(groupeExtRam, tableauRamPuissance){
     return 0;
 }
 
-//=RECHERCHEX(E28;W40:W46;Y40:Y46)
-function recherche_p_delivree_gainable_jour(tailleGainJour,tableauUnitPdispJour){
+
+function recherche_p_delivree_gainable(tailleGain,tableauUnitPdisp){
     for (let i = 0; i < tableauUnitPdispJour[0].length; i++){
-        if(tailleGainJour == tableauUnitPdispJour[0][i]){
-            return tableauUnitPdispJour[2][i];
+        if(tailleGain == tableauUnitPdispJour[0][i]){
+            return tableauUnitPdisp[2][i];
         }
     }
-    window.alert("pas de ref trouvée pr unit/P dispo jour");
+    window.alert("pas de ref trouvée pr unit/P dispo");
     return 0;
 }
 
 
-
-
-
-//=RECHERCHEX(E28;P125:R125;P128:R128)
-function recherche_qv_delivree_gainable_jour(tailleGainJour,tableauRAD){
+function recherche_qv_delivree_gainable(tailleGain,tableauRAD){
     for(let i = 0; i< tableauRAD[0].length; i++){
-        if(tailleGainJour == tableauRAD[0][i]){
+        if(tailleGain == tableauRAD[0][i]){
             return tableauRAD[3][i];
         }
     }
     window.alert("pas de ref pr qv dans RAD");
     return 0;
 }
-//=RECHERCHEX(E28;P125:R125;P127:R127)
-function recherche_pression_sonore_gainable_jour(tailleGainJour,tableauRAD){
+
+function recherche_pression_sonore_gainable(tailleGain,tableauRAD){
     for(let i = 0; i< tableauRAD[0].length; i++){
-        if(tailleGainJour == tableauRAD[0][i]){
+        if(tailleGain == tableauRAD[0][i]){
             return tableauRAD[2][i];
         }
     }
     window.alert("pas de ref pr press sonore dans RAD");
     return 0;
 }
-//=RECHERCHEX(E32;W63:W68;Y63:Y68)
-function recherche_p_delivree_gainable_nuit(tailleGainNuit,tableauUnitPdispNuit){
-    for (let i = 0; i < tableauUnitPdispNuit[0].length; i++){
-        if(tailleGainNuit == tableauUnitPdispNuit[0][i]){
-            return tableauUnitPdispNuit[2][i];
-        }
-    }
-    window.alert("pas de ref trouvée pr unit/P dispo nuit");
-    return 0;
-}
-//=RECHERCHEX(E32;P125:R125;P128:R128)
-function recherche_qv_delivree_gainable_nuit(tailleGainNuit,tableauRAD){
-    for(let i = 0; i< tableauRAD[0].length; i++){
-        if(tailleGainNuit == tableauRAD[0][i]){
-            return tableauRAD[3][i];
-        }
-    }
-    window.alert("pas de ref pr press sonore dans RAD");
-    return 0;
-}
-//=RECHERCHEX(E32;P125:R125;P127:R127)
-function recherche_pression_sonore_gainable_nuit(tailleGainNuit,tableauRAD){
-    for(let i = 0; i< tableauRAD[0].length; i++){
-        if(tailleGainNuit == tableauRAD[0][i]){
-            return tableauRAD[2][i];
-        }
-    }
-    window.alert("pas de ref pr press sonore dans RAD");
-    return 0;
-}
+
 
 //definition des valeurs de base
 
@@ -228,13 +195,13 @@ let puissanceInstalle = calc_puissance_a_installer(puissanceJour, puissanceNuit,
 let ballonYutampo = recherche_ballon_yutampo(typeLogement,ecs);
 let puissDelivreeRam = recherche_p_delivree_RAM(groupeExtRam, tableauRamPuissance);
 
-let puissDelivGainJour = recherche_p_delivree_gainable_jour(tailleGainJour,tableauUnitPdispJour);
-let qvJour = recherche_qv_delivree_gainable_jour(tailleGainJour,tableauRAD);
-let pressionSonoreJour = recherche_pression_sonore_gainable_jour(tailleGainJour,tableauRAD);
+let puissDelivGainJour = recherche_p_delivree_gainable(tailleGainJour,tableauUnitPdispJour);
+let qvJour = recherche_qv_delivree_gainable(tailleGainJour,tableauRAD);
+let pressionSonoreJour = recherche_pression_sonore_gainable(tailleGainJour,tableauRAD);
 
-let puissDelivGainNuit = recherche_p_delivree_gainable_nuit(tailleGainNuit,tableauUnitPdispNuit);
-let qvNuit = recherche_qv_delivree_gainable_nuit(tailleGainNuit,tableauRAD);
-let pressionSonoreNuit = recherche_pression_sonore_gainable_nuit(tailleGainNuit,tableauRAD);
+let puissDelivGainNuit = recherche_p_delivree_gainable(tailleGainNuit,tableauUnitPdispNuit);
+let qvNuit = recherche_qv_delivree_gainable(tailleGainNuit,tableauRAD);
+let pressionSonoreNuit = recherche_pression_sonore_gainable(tailleGainNuit,tableauRAD);
 
 //affichage des tests
 console.log("volume : " + volume);
