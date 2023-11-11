@@ -36,6 +36,8 @@ function recherche_g17(longEquivFrigo, corrTuyauChauff){
     }
 }
 
+
+
 //definition des valeurs de base
 
 let coefMajoration = 1.2 //coefficient de majoration 1,2 selon DTU 65.16
