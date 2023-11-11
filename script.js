@@ -3,7 +3,7 @@
 
 function calc_volume (surfaceJour, hauteurJour, surfaceNuit, hauteurNuit) {//  m3
     return (surfaceJour*hauteurJour) + (surfaceNuit * hauteurNuit);
-};
+}
 
 function calc_debit_air(surface, hauteur, tauxBrassage){//  m3/h
     return (surface * hauteur * tauxBrassage);
@@ -28,7 +28,7 @@ function recherche(reference, tableau, indiceRetour){
             return tableau[indiceRetour][i];
         }
     }
-    window.alert("pas de ref pr press sonore dans RAD");
+    window.alert("pas de ref trouvé pr " + reference);
     return 0;
 }
 
