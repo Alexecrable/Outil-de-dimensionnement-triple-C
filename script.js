@@ -89,8 +89,12 @@ let tableauUnitPdispNuit = [
     [3160, 4777, 4997]
 ];
 
+let refGvBrass = [
+    ["RE2020", "RT2012", "RT2005", "Construction > 1980"],
+    [4, 5, 6]
+];
 
-console.log(ecs[2]);
+
 
 
 //zone liste
@@ -108,7 +112,6 @@ let factDegivr = -5;
 //valeurs ou je dois encore faire les calculs
 //ou comprendre a quoi elles correspondent reellement
 
-let tauxBrassage = 5;
 let g10 = 0.8;
 let g11 = -5;
 let g12 = 20;
@@ -119,6 +122,9 @@ let tailleGainNuit = "RAD-50RPE";
 
 let g17 = recherche(longEquivFrigo, corrTuyauChauff,1);
 let g18 = recherche(factDegivr, corrDegivr,1);
+
+let tauxBrassage = recherche(reglemThermique, refGvBrass, 1);
+
 
 let volume = calc_volume(surfaceJour, hauteurJour, surfaceNuit, hauteurNuit);
 let debitAirZoneJour = calc_debit_air(surfaceJour, hauteurJour, tauxBrassage);
@@ -154,3 +160,5 @@ console.log("puissance delivre ram = " + puissDelivreeRam);
 
 console.log("tests finaux pr aujourdhui raraarar");
 console.log(puissDelivGainJour, qvJour, pressionSonoreJour, puissDelivGainNuit, qvNuit, pressionSonoreNuit);
+
+console.log("test taux brassage : " + tauxBrassage);
