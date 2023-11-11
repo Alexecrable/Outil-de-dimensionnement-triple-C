@@ -14,12 +14,13 @@ function calc_debit_air_nuit(surfaceNuit, hauteurNuit, tauxBrassage){//  m3/h
 }
 
 
-function calc_puissance_jour(surfaceJour, hauteurJour, G10, tempInt, tempExt){// W
-    return surfaceJour * hauteurJour * G10 * (tempInt-tempExt);
+function calc_puissance_jour(surfaceJour, hauteurJour, g10, tempInt, tempExt){// W
+    console.log(surfaceJour, hauteurJour, g10, tempInt, tempExt);
+    return surfaceJour * hauteurJour * g10 * (tempInt-tempExt);
 }
 
-function calc_puissance_nuit(surfaceNuit, hauteurNuit, G10, tempInt, tempExt){// W
-    return surfaceNuit * hauteurNuit * G10 * (tempInt-tempExt);
+function calc_puissance_nuit(surfaceNuit, hauteurNuit, g10, tempInt, tempExt){// W
+    return surfaceNuit * hauteurNuit * g10 * (tempInt-tempExt);
 }
 
 
@@ -48,9 +49,8 @@ function recherche_g18(factDegivr, corrDegivr){
     window.alert("pas de correspondance trouvée pour g18 !");
     return 0;
 }
-//=RECHERCHEX(B11;W82:W86;Y82:Y86)
-function calc_ballon_yutampo(typeLogement, ecs){
-    console.log(ecs[0].length);
+//
+function recherche_ballon_yutampo(typeLogement, ecs){
     for(let i = 0; i < ecs[0].length ; i++){
        
         if (typeLogement == ecs[0][i]){//recherche une correspondance dans le tableau ecs
@@ -61,11 +61,21 @@ function calc_ballon_yutampo(typeLogement, ecs){
     return 0;
 }
 
-
+//=RECHERCHEX(E26;P130:R130;P131:R131)
+function recherche_P_delivree_RAM(groupeExtRam, tableauRamPuissance){
+    for(let i = 0; i < tableauRamPuissance[0].length ; i++){
+       
+        if (groupeExtRam == tableauRamPuissance[0][i]){//recherche une correspondance dans le tableau
+            return tableauRamPuissance[1][i];
+        }
+    }
+    window.alert("pas de correspondance trouvée pour RAM/P !");
+    return 0;
+}
 
 //definition des valeurs de base
 
-let coefMajoration = 1.2 //coefficient de majoration 1,2 selon DTU 65.16
+let coefMajoration = 1.2; //coefficient de majoration 1,2 selon DTU 65.16
 
 let surfaceJour = 84;
 
@@ -96,6 +106,11 @@ let ecs = [
     ["TAW 190", "TAW 190", "TAW 190", "TAW 270", "TAW 270"]
 ];
 
+let tableauRamPuissance = [
+    ["RAM-53NYP3E" , "RAM-70NYP4E", "RAM-90NYP5E"],
+    [4997, 6247, 8084]
+];
+
 
 console.log(ecs[2]);
 
@@ -104,6 +119,11 @@ console.log(ecs[2]);
 let hauteurJour = 2.5;
 let hauteurNuit = 2.5;
 let typeLogement = "T4";
+
+let reglemThermique = "RT2012";
+let tempExt = -4;
+let tempInt = 19;
+
 let longEquivFrigo = 25;
 let factDegivr = -5;
 
@@ -111,24 +131,36 @@ let factDegivr = -5;
 //ou comprendre a quoi elles correspondent reellement
 
 let tauxBrassage = 5;
-let g8 = 0.8;
-let g9 = -5;
-let g10 = 20;
+let g10 = 0.8;
+let g11 = -5;
+let g12 = 20;
+let groupeExtRam = "RAM-90NYP5E";
 
 
 
 //tests des calculs
+//let g18 = recherche_g18(factDegivr, corrDegivr);
+//let g17 = recherche_g17(longEquivFrigo, corrTuyauChauff);
+//
+//let volume = calc_volume(84, 2.5, 47, 2.5);
+//let debitAirZoneJour = calc_debit_air_jour(84, 2.5, 5);
+//let debitAirZoneNuit = calc_debit_air_nuit(47, 2.5, 5);
+//let puissanceJour = calc_puissance_jour(84, 2.5, 0.8, 19, -4);
+//let puissanceNuit = calc_puissance_jour(47, 2.5, 0.8, 19, -4);
+//let puissanceInstalle = calc_puissance_a_installer(puissanceJour, puissanceNuit, g17, g18, coefMajoration);
+//let ballonYutampo = calc_ballon_yutampo(typeLogement,ecs);
+
 let g17 = recherche_g17(longEquivFrigo, corrTuyauChauff);
 let g18 = recherche_g18(factDegivr, corrDegivr);
 
-let volume = calc_volume(84, 2.5, 47, 2.5);
-let debitAirZoneJour = calc_debit_air_jour(84, 2.5, 5);
-let debitAirZoneNuit = calc_debit_air_nuit(47, 2.5, 5);
-let puissanceJour = calc_puissance_jour(84, 2.5, 0.8, 19, -4);
-let puissanceNuit = calc_puissance_jour(47, 2.5, 0.8, 19, -4);
+let volume = calc_volume(surfaceJour, hauteurJour, surfaceNuit, hauteurNuit);
+let debitAirZoneJour = calc_debit_air_jour(surfaceJour, hauteurJour, tauxBrassage);
+let debitAirZoneNuit = calc_debit_air_nuit(surfaceNuit, hauteurNuit, tauxBrassage);
+let puissanceJour = calc_puissance_jour(surfaceJour, hauteurJour, g10, tempInt, tempExt);
+let puissanceNuit = calc_puissance_nuit(surfaceNuit, hauteurNuit, g10, tempInt, tempExt);
 let puissanceInstalle = calc_puissance_a_installer(puissanceJour, puissanceNuit, g17, g18, coefMajoration);
-let ballonYutampo = calc_ballon_yutampo(typeLogement,ecs);
-
+let ballonYutampo = recherche_ballon_yutampo(typeLogement,ecs);
+let puissDelivreeRam = recherche_P_delivree_RAM(groupeExtRam, tableauRamPuissance);
 //affichage des tests
 console.log("volume : " + volume);
 console.log("debitairzonejour : " + debitAirZoneJour);
@@ -141,3 +173,4 @@ console.log("g17 : " + g17);
 console.log("g18 : " + g18);
 
 console.log("ballon yutampo :" + ballonYutampo);
+console.log("puissance delivre ram = " + puissDelivreeRam);
