@@ -32,6 +32,22 @@ function recherche(reference, tableau, indiceRetour){
     return 0;
 }
 
+
+//=SI(E8<P128;P125;SI(E8<Q128;Q125;SI(E8<R128;R125;"Sous dimensionné - changer de système")))
+function calc_taille_gain_jour(debitAirZoneJour, tableauRAD){
+    if(debitAirZoneJour < 510){
+        return tableauRAD[0][0];
+    }
+    else{
+        if(debitAirZoneJour < 1140){
+            return tableauRAD[0][1];
+        }
+        else{
+            return tableauRAD[0][2];
+        }
+    }
+}
+
 //definition des valeurs de base
 
 let coefMajoration = 1.2; //coefficient de majoration 1,2 selon DTU 65.16
@@ -40,6 +56,17 @@ let surfaceJour = 84;
 
 let surfaceNuit = 47;
 
+//zone liste
+let hauteurJour = 2.5;
+let hauteurNuit = 2.5;
+let typeLogement = "T4";
+
+let reglemThermique = "RT2012";
+let tempExt = -4;
+let tempInt = 19;
+
+let longEquivFrigo = 25;
+let factDegivr = -5;
 
 
 //zone tableauxxxxx
@@ -91,74 +118,71 @@ let tableauUnitPdispNuit = [
 
 let refGvBrass = [
     ["RE2020", "RT2012", "RT2005", "Construction > 1980"],
+    [0.6, 0.8, 1, 1.4],
     [4, 5, 6]
+];
+
+let refRadGpeExt = [
+    ["RAD-35RPE", "RAD-50RPE"],
+    ["RAM-70NYP4E", "RAM-90NYP5E"]
+];
+
+let refRadJourNuit = [
+    ["RAD-35RPE", "RAD-50RPE"],
+    ["RAD-35RPE", "RAD-50RPE"]
+];
+
+let refTextTgse = [
+    [-4, -5, -6, -7, -8, -9],
+    [-5, -5, -7, -7, -10, -10],
+];
+
+let refTinTbs = [
+    [19, 20, 21, 22],
+    [20, 20, 22, 22]
 ];
 
 
 
+//calculs
+let volume = calc_volume(surfaceJour, hauteurJour, surfaceNuit, hauteurNuit);
+let tauxBrassage = recherche(reglemThermique, refGvBrass, 2);
+let debitAirZoneJour = calc_debit_air(surfaceJour, hauteurJour, tauxBrassage);
+let debitAirZoneNuit = calc_debit_air(surfaceNuit, hauteurNuit, tauxBrassage);
 
-//zone liste
-let hauteurJour = 2.5;
-let hauteurNuit = 2.5;
-let typeLogement = "T4";
+let g10 = recherche(reglemThermique, refGvBrass, 1);
+let g12 = recherche(tempExt, refTextTgse, 1);
+let g11 = recherche(tempInt, refTinTbs, 1);
 
-let reglemThermique = "RT2012";
-let tempExt = -4;
-let tempInt = 19;
-
-let longEquivFrigo = 25;
-let factDegivr = -5;
-
-//valeurs ou je dois encore faire les calculs
-//ou comprendre a quoi elles correspondent reellement
-
-let g10 = 0.8;
-let g11 = -5;
-let g12 = 20;
-let groupeExtRam = "RAM-90NYP5E";
-
-let tailleGainJour = "RAD-50RPE";
-let tailleGainNuit = "RAD-50RPE";
+let puissanceJour = calc_puissance(surfaceJour, hauteurJour, g10, tempInt, tempExt);
+let puissanceNuit = calc_puissance(surfaceNuit, hauteurNuit, g10, tempInt, tempExt);
 
 let g17 = recherche(longEquivFrigo, corrTuyauChauff,1);
 let g18 = recherche(factDegivr, corrDegivr,1);
 
-let tauxBrassage = recherche(reglemThermique, refGvBrass, 1);
-
-
-let volume = calc_volume(surfaceJour, hauteurJour, surfaceNuit, hauteurNuit);
-let debitAirZoneJour = calc_debit_air(surfaceJour, hauteurJour, tauxBrassage);
-let debitAirZoneNuit = calc_debit_air(surfaceNuit, hauteurNuit, tauxBrassage);
-let puissanceJour = calc_puissance(surfaceJour, hauteurJour, g10, tempInt, tempExt);
-let puissanceNuit = calc_puissance(surfaceNuit, hauteurNuit, g10, tempInt, tempExt);
 let puissanceInstalle = calc_puissance_a_installer(puissanceJour, puissanceNuit, g17, g18, coefMajoration);
 
 let ballonYutampo = recherche(typeLogement,ecs,2);
+
+let groupeExtRam = recherche(tailleGainJour, refRadGpeExt, 1);
 let puissDelivreeRam = recherche(groupeExtRam, tableauRamPuissance,1);
+
+let tailleGainJour = calc_taille_gain_jour(debitAirZoneJour, tableauRAD);
 
 let puissDelivGainJour = recherche(tailleGainJour,tableauUnitPdispJour,2);
 let qvJour = recherche(tailleGainJour,tableauRAD,3);
 let pressionSonoreJour = recherche(tailleGainJour,tableauRAD,2);
 
+let tailleGainNuit = recherche(tailleGainJour, refRadJourNuit, 1);
+
 let puissDelivGainNuit = recherche(tailleGainNuit,tableauUnitPdispNuit,2);
 let qvNuit = recherche(tailleGainNuit,tableauRAD,3);
 let pressionSonoreNuit = recherche(tailleGainNuit,tableauRAD,2);
 
-//affichage des tests
-console.log("volume : " + volume);
-console.log("debitairzonejour : " + debitAirZoneJour);
-console.log("debitairzonenuit : " + debitAirZoneNuit);
-console.log("puissance_satisf_jour : " + puissanceJour);
-console.log("puissance_satisf_nuit : " + puissanceNuit);
-console.log("puissance a installer : " + puissanceInstalle);
-
-console.log("g17 : " + g17);
-console.log("g18 : " + g18);
-
-console.log("ballon yutampo :" + ballonYutampo);
-console.log("puissance delivre ram = " + puissDelivreeRam);
-
-console.log("tests finaux pr aujourdhui raraarar");
-console.log(puissDelivGainJour, qvJour, pressionSonoreJour, puissDelivGainNuit, qvNuit, pressionSonoreNuit);
-
-console.log("test taux brassage : " + tauxBrassage);
+//verif accoustique
+if(pressionSonoreJour > 35){
+    window.alert("attention accoustique jour !")
+}
+if(pressionSonoreNuit > 35){
+    window.alert("attention accoustique nuit !")
+}
