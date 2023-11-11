@@ -164,9 +164,6 @@ let puissanceInstalle = calc_puissance_a_installer(puissanceJour, puissanceNuit,
 
 let ballonYutampo = recherche(typeLogement,ecs,2);
 
-let groupeExtRam = recherche(tailleGainJour, refRadGpeExt, 1);
-let puissDelivreeRam = recherche(groupeExtRam, tableauRamPuissance,1);
-
 let tailleGainJour = calc_taille_gain_jour(debitAirZoneJour, tableauRAD);
 
 let puissDelivGainJour = recherche(tailleGainJour,tableauUnitPdispJour,2);
@@ -178,6 +175,10 @@ let tailleGainNuit = recherche(tailleGainJour, refRadJourNuit, 1);
 let puissDelivGainNuit = recherche(tailleGainNuit,tableauUnitPdispNuit,2);
 let qvNuit = recherche(tailleGainNuit,tableauRAD,3);
 let pressionSonoreNuit = recherche(tailleGainNuit,tableauRAD,2);
+
+let groupeExtRam = recherche(tailleGainJour, refRadGpeExt, 1);
+let puissDelivreeRam = recherche(groupeExtRam, tableauRamPuissance,1);
+
 
 //verif accoustique
 if(pressionSonoreJour > 35){
