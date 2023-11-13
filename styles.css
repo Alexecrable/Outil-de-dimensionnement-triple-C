@@ -1,0 +1,60 @@
+*{
+    padding: 1em;
+    color: white;
+    
+}
+
+html{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #1943EC;
+    padding: 2em;
+}
+
+header{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #748DF0;
+}
+
+#inputter div{
+    border: solid red;
+    background-color: orange;
+    
+}
+body{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+button{
+    background-color: purple;
+    color: pink;
+    width: 20em;
+    border: dotted #66ff66;
+    transition: all 1s, 1s;
+}
+
+button:hover{
+    background-color: pink;
+    color: black;
+    width: 18em;
+    
+    
+}
+
+label{
+    text-decoration: underline solid red;
+    color: red;
+}
+
+input, select, option{
+    border : dotted red;
+    color: yellow;
+    background-color: black;
+}
+

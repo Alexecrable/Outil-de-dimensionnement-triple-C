@@ -7,35 +7,51 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Outil de dimensionnement triple C</title>
 </head>
+
+<header>
+    <h3>Formulaire de dimensionnement Solution TRIPLE C <em>Certifiée</em></h3>
+    <h1>VERSION DEUX UNITES GAINABLES</h1>
+</header>
 <body>
-    <h1>Tests en construction !</h1>
-    <div class="entrees">
+   
+    <div id="inputter">
         
-        <div class="simple">
-            <label for="coefMajoration">Coef Majoration:</label>
-            <input type="number" name="coefMajoration"/>
+        <div id="jour">
             <label for="surfaceJour">Surface Jour:</label>
             <input type="number" name="surfaceJour"/>
+            <label for="hauteurJour">Hauteur Jour:</label>
+            <select name="surfaceJour">
+                <option value="2.5">2,5</option>
+                <option value="2.6">2,6</option>
+                <option value="2.7">2,7</option>
+                <option value="2.8">2,8</option>
+                <option value="2.9">2,9</option>
+                <option value="3">3</option>
+                <option value="3.1">3,1</option>
+                <option value="3.2">3,2</option>
+            </select>
+        </div>
+        <div id="nuit">
             <label for="surfaceNuit">Surface Nuit:</label>
             <input type="number" name="surfaceNuit"/>
-        </div>
-        <div class="liste">
-            <label for="hauteurJour">Hauteur Jour:</label>
-            <select name="hauteurJour">
-              <option value="volvo">Volvo</option>
-              <option value="saab">Saab</option>
-              <option value="fiat">Fiat</option>
-              <option value="audi">Audi</option>
+            <label for="hauteurNuit">Hauteur Nuit:</label>
+            <select name="hauteurNuit">
+                <option value="2.5">2,5</option>
+                <option value="2.6">2,6</option>
+                <option value="2.7">2,7</option>
+                <option value="2.8">2,8</option>
+                <option value="2.9">2,9</option>
+                <option value="3">3</option>
+                <option value="3.1">3,1</option>
+                <option value="3.2">3,2</option>
             </select>
         </div>
     </div>
-    <div class="horaires">
+    <button id="CALCULATEUR" onclick='window.alert("JE T4AIME")'>CALCUL</button>
+    <div id="Resultats">
         
-        Samedi : 05h00
-        Lundi : 02h00
-    </div>
-    <div class="questions">
        
     </div>
+    
 </body>
 </html>
