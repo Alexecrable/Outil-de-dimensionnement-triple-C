@@ -24,6 +24,7 @@ function calc_puissance_a_installer(puissanceJour, puissanceNuit, g17, g18, coef
 
 function recherche(reference, tableau, indiceRetour){
     for(let i = 0; i< tableau[0].length; i++){
+        
         if(reference == tableau[0][i]){
             return tableau[indiceRetour][i];
         }
@@ -135,11 +136,22 @@ let refRadJourNuit = [
 let refTextTgse = [
     [-4, -5, -6, -7, -8, -9],
     [-5, -5, -7, -7, -10, -10],
+    
 ];
 
 let refTinTbs = [
     [19, 20, 21, 22],
     [20, 20, 22, 22]
+];
+
+let tableauResTgse = [
+    [-15, -10, -7, -5, 0, 7, 10, 15],
+    [1, 2, 3, 4, 5, 6, 7, 8]
+];
+
+let tableauResTbs = [
+    [16, 18, 20, 22, 24],
+    [1, 2, 3, 4, 5]
 ];
 
 
@@ -151,8 +163,8 @@ let debitAirZoneJour = calc_debit_air(surfaceJour, hauteurJour, tauxBrassage);
 let debitAirZoneNuit = calc_debit_air(surfaceNuit, hauteurNuit, tauxBrassage);
 
 let g10 = recherche(reglemThermique, refGvBrass, 1);
-let g12 = recherche(tempExt, refTextTgse, 1);
-let g11 = recherche(tempInt, refTinTbs, 1);
+let g11 = recherche(tempExt, refTextTgse, 1);
+let g12 = recherche(tempInt, refTinTbs, 1);
 
 let puissanceJour = calc_puissance(surfaceJour, hauteurJour, g10, tempInt, tempExt);
 let puissanceNuit = calc_puissance(surfaceNuit, hauteurNuit, g10, tempInt, tempExt);
@@ -180,6 +192,13 @@ let groupeExtRam = recherche(tailleGainJour, refRadGpeExt, 1);
 let puissDelivreeRam = recherche(groupeExtRam, tableauRamPuissance,1);
 
 
+
+let resTsgeJour = recherche(g11, tableauResTgse, 1);
+let resTbsJour = recherche(g12, tableauResTbs, 1);
+
+let resTsgeNuit = recherche(g11, tableauResTgse, 1);
+let resTbsNuit = recherche(g12, tableauResTbs, 1);
+
 //verif accoustique
 if(pressionSonoreJour > 35){
     window.alert("attention accoustique jour !")
@@ -187,3 +206,8 @@ if(pressionSonoreJour > 35){
 if(pressionSonoreNuit > 35){
     window.alert("attention accoustique nuit !")
 }
+
+console.log("test : " + resTsgeJour);
+console.log("test : " + resTbsJour);
+console.log("test : " + resTsgeNuit);
+console.log("test : " + resTbsNuit);
