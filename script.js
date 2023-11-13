@@ -49,6 +49,10 @@ function calc_taille_gain_jour(debitAirZoneJour, tableauRAD){
     }
 }
 
+function calc_brassage_reel(qv, surface, hauteur){
+    return (qv / (surface * hauteur));
+}
+
 //definition des valeurs de base
 
 let coefMajoration = 1.2; //coefficient de majoration 1,2 selon DTU 65.16
@@ -199,6 +203,10 @@ let resTbsJour = recherche(g12, tableauResTbs, 1);
 let resTsgeNuit = recherche(g11, tableauResTgse, 1);
 let resTbsNuit = recherche(g12, tableauResTbs, 1);
 
+
+let brassageReelJour = calc_brassage_reel(qvJour, surfaceJour, hauteurJour);
+let brassageReelNuit = calc_brassage_reel(qvNuit, surfaceNuit, hauteurNuit);
+
 //verif accoustique
 if(pressionSonoreJour > 35){
     window.alert("attention accoustique jour !")
@@ -207,7 +215,6 @@ if(pressionSonoreNuit > 35){
     window.alert("attention accoustique nuit !")
 }
 
-console.log("test : " + resTsgeJour);
-console.log("test : " + resTbsJour);
-console.log("test : " + resTsgeNuit);
-console.log("test : " + resTbsNuit);
+console.log("test : " + brassageReelJour);
+console.log("test : " + brassageReelNuit);
+
