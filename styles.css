@@ -76,7 +76,6 @@ button:hover{
     background-color: rgb(2, 36, 2);
     display: flex;
     flex-direction: column;
-    flex-wrap: wrap;
 }
 
 #Resultats div{
