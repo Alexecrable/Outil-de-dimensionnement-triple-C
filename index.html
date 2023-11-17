@@ -16,62 +16,64 @@
    
     <div id="inputter">
         
-        
-        <div>
-            <label for="surfaceJour">Surface Jour :</label>
-            <input type="number" id = "surfaceJour" name="surfaceJour"/>
+        <div id="jour">
+            <div>
+                <label for="surfaceJour">Surface Jour :</label>
+                <input type="number" id = "surfaceJour" name="surfaceJour"/>
+            </div>
+            <div>
+                <label for="hauteurJour">Hauteur Jour :</label>
+                <select id="hauteurJour">
+                    <option value="2.5">2,5</option>
+                    <option value="2.6">2,6</option>
+                    <option value="2.7">2,7</option>
+                    <option value="2.8">2,8</option>
+                    <option value="2.9">2,9</option>
+                    <option value="3">3</option>
+                    <option value="3.1">3,1</option>
+                    <option value="3.2">3,2</option>
+                </select>
+            </div>
         </div>
-        <div>
-            <label for="hauteurJour">Hauteur Jour :</label>
-            <select id="hauteurJour">
-                <option value="2.5">2,5</option>
-                <option value="2.6">2,6</option>
-                <option value="2.7">2,7</option>
-                <option value="2.8">2,8</option>
-                <option value="2.9">2,9</option>
-                <option value="3">3</option>
-                <option value="3.1">3,1</option>
-                <option value="3.2">3,2</option>
-            </select>
+        <div id="nuit">
+            <div>
+                <label for="surfaceNuit">Surface Nuit:</label>
+                <input type="number" id="surfaceNuit"/>
+            </div>
+            <div>
+                <label for="hauteurNuit">Hauteur Nuit :</label>
+                <select id="hauteurNuit">
+                    <option value="2.5">2,5</option>
+                    <option value="2.6">2,6</option>
+                    <option value="2.7">2,7</option>
+                    <option value="2.8">2,8</option>
+                    <option value="2.9">2,9</option>
+                    <option value="3">3</option>
+                    <option value="3.1">3,1</option>
+                    <option value="3.2">3,2</option>
+                </select>
+            </div>
         </div>
-        
-        <div>
-            <label for="surfaceNuit">Surface Nuit:</label>
-            <input type="number" id="surfaceNuit"/>
-        </div>
-        <div>
-            <label for="hauteurNuit">Hauteur Nuit :</label>
-            <select id="hauteurNuit">
-                <option value="2.5">2,5</option>
-                <option value="2.6">2,6</option>
-                <option value="2.7">2,7</option>
-                <option value="2.8">2,8</option>
-                <option value="2.9">2,9</option>
-                <option value="3">3</option>
-                <option value="3.1">3,1</option>
-                <option value="3.2">3,2</option>
-            </select>
-        </div>
-
-        <div>
-            <label for="typeLogement">Type Logement :</label>
-            <select id="typeLogement">
-                <option value="T1">T1</option>
-                <option value="T2">T2</option>
-                <option value="T3">T3</option>
-                <option value="T4">T4</option>
-                <option value="T5">T5</option>
-            </select>
-        </div>
-
-        <div>
-            <label for="reglement_thermique">Reglementation Thermique :</label>
-            <select id="reglemThermique">
-                <option value="RE2020">RE2020</option>
-                <option value="RT2012">RT2012</option>
-                <option value="RT2005">RT2005</option>
-                <option value="Construction > 1980">Construction > 1980</option>
-            </select>
+        <div id="TypeetRegl">
+            <div>
+                <label for="typeLogement">Type Logement :</label>
+                <select id="typeLogement">
+                    <option value="T1">T1</option>
+                    <option value="T2">T2</option>
+                    <option value="T3">T3</option>
+                    <option value="T4">T4</option>
+                    <option value="T5">T5</option>
+                </select>
+            </div>
+            <div>
+                <label for="reglement_thermique">Reglementation Thermique :</label>
+                <select id="reglemThermique">
+                    <option value="RE2020">RE2020</option>
+                    <option value="RT2012">RT2012</option>
+                    <option value="RT2005">RT2005</option>
+                    <option value="Construction > 1980">Construction > 1980</option>
+                </select>
+            </div>
         </div>
         <div id="temperatures">
             <div>
@@ -94,12 +96,9 @@
                     <option value="22">22</option>
                 </select>
             </div>
-            
-            
-        </div>    
-        <div>
             <button id="CALCULATEUR">CALCUL</button>
-        </div> 
+            
+        </div>        
     </div>
     
     <div id="Resultats">

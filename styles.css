@@ -22,12 +22,7 @@ header{
     background-color: #748DF0;
 }
 
-#inputter div{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
-}
+
 
 #inputter{
     
@@ -35,6 +30,15 @@ header{
     background-color: orange;
     
 }
+
+#inputter div{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+
 body{
     display: flex;
     flex-direction: column;
@@ -75,7 +79,23 @@ button:hover{
     border: solid rgb(0, 213, 228);
     background-color: rgb(36, 4, 2);
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    flex-wrap: wrap;
+}   
+
+@media screen and (max-width: 1000px){
+    #inputter div {
+        display: flex;
+        flex-direction: column;
+    }
+    #inputter div div{
+        display: flex;
+        flex-direction: row;
+    }
+    #Resultats{
+        flex-direction: column;
+        
+    }   
 }
 
 #Resultats div{
