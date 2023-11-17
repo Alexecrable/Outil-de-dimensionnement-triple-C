@@ -17,10 +17,10 @@
     <div id="inputter">
         
         <div id="jour">
-            <label for="surfaceJour">Surface Jour:</label>
-            <input type="number" name="surfaceJour"/>
-            <label for="hauteurJour">Hauteur Jour:</label>
-            <select name="surfaceJour">
+            <label for="surfaceJour">Surface Jour :</label>
+            <input type="number" id = "surfaceJour" name="surfaceJour"/>
+            <label for="hauteurJour">Hauteur Jour :</label>
+            <select id="hauteurJour">
                 <option value="2.5">2,5</option>
                 <option value="2.6">2,6</option>
                 <option value="2.7">2,7</option>
@@ -33,9 +33,9 @@
         </div>
         <div id="nuit">
             <label for="surfaceNuit">Surface Nuit:</label>
-            <input type="number" name="surfaceNuit"/>
-            <label for="hauteurNuit">Hauteur Nuit:</label>
-            <select name="hauteurNuit">
+            <input type="number" id="surfaceNuit"/>
+            <label for="hauteurNuit">Hauteur Nuit :</label>
+            <select id="hauteurNuit">
                 <option value="2.5">2,5</option>
                 <option value="2.6">2,6</option>
                 <option value="2.7">2,7</option>
@@ -46,10 +46,167 @@
                 <option value="3.2">3,2</option>
             </select>
         </div>
+        <div id="TypeetRegl">
+            <label for="typeLogement">Type Logement :</label>
+            <select id="typeLogement">
+                <option value="T1">T1</option>
+                <option value="T2">T2</option>
+                <option value="T3">T3</option>
+                <option value="T4">T4</option>
+                <option value="T5">T5</option>
+            </select>
+            <label for="reglement_thermique">Reglementation Thermique :</label>
+            <select id="reglemThermique">
+                <option value="RE2020">RE2020</option>
+                <option value="RT2012">RT2012</option>
+                <option value="RT2005">RT2005</option>
+                <option value="Construction > 1980">Construction > 1980</option>
+            </select>
+        </div>
+        <div id="temperatures">
+            <div>
+                <label for="tempExt">T° Ext:</label>
+                <select id="tempExt">
+                    <option value="-4">-4</option>
+                    <option value="-5">-5</option>
+                    <option value="-6">-6</option>
+                    <option value="-7">-7</option>
+                    <option value="-8">-8</option>
+                    <option value="-9">-9</option>
+                </select>
+            </div>
+            <div>
+                <label for="tempInt">T° Int :</label>
+                <select id="tempInt">
+                    <option value="19">19</option>
+                    <option value="20">20</option>
+                    <option value="21">21</option>
+                    <option value="22">22</option>
+                </select>
+            </div>
+            <button id="CALCULATEUR">CALCUL</button>
+            
+        </div>        
     </div>
-    <button id="CALCULATEUR" onclick='window.alert("JE T4AIME")'>CALCUL</button>
+    
     <div id="Resultats">
-        
+       
+        <div>
+            <p>Volume :</p>
+            <p id="Volume"></p>
+        </div>
+        <div>
+            <p>Taux de Brassage :</p>
+            <p id="tauxBrassage"></p>
+        </div>
+        <div>
+            <p>Debit Air Jour :</p>
+            <p id="debitAirZoneJour"></p>
+        </div>
+        <div>
+            <p>Debit Air Nuit :</p>
+            <p id="debitAirZoneNuit"></p>
+        </div>
+        <div>
+            <p>G10 :</p>
+            <p id="g10"></p>
+        </div>
+        <div>
+            <p>G11 :</p>
+            <p id="g11"></p>
+        </div>
+        <div>
+            <p>G12 :</p>
+            <p id="g12"></p>
+        </div>
+        <div>
+            <p>Puissance Jour :</p>
+            <p id="puissanceJour"></p>
+        </div>
+        <div>
+            <p>Puissance Nuit :</p>
+            <p id="puissanceNuit"></p>
+        </div>
+        <div>
+            <p>G17 :</p>
+            <p id="g17"></p>
+        </div>
+        <div>
+            <p>G18 :</p>
+            <p id="g18"></p>
+        </div>
+        <div>
+            <p>Puissance a installer</p>
+            <p id="puissanceInstalle"></p>
+        </div>
+        <div>
+            <p>Ballon Yutampo</p>
+            <p id="ballonYutampo"></p>
+        </div>
+        <div>
+            <p>Taille Gain Jour :</p>
+            <p id="tailleGainJour"></p>
+        </div>
+        <div>
+            <p>PuissDelivGainJour</p>
+            <p id="puissDelivGainJour"></p>
+        </div>
+        <div>
+            <p>QVJour</p>
+            <p id="qvJour"></p>
+        </div>
+        <div>
+            <p>PressionSOnoreJour</p>
+            <p id="pressionSonoreJour"></p>
+        </div>
+        <div>
+            <p>TailleGainNuit</p>
+            <p id="tailleGainNuit"></p>
+        </div>
+        <div>
+            <p>PuissDelivgainNui</p>
+            <p id="puissDelivGainNuit"></p>
+        </div>
+        <div>
+            <p>QVNuit</p>
+            <p id="qvNuit"></p>
+        </div>
+        <div>
+            <p>PressionSonoreNuit :</p>
+            <p id="pressionSonoreNuit"></p>
+        </div>
+        <div>
+            <p>groupeExt Reglementation</p>
+            <p id="groupeExtRam"></p>
+        </div>
+        <div>
+            <p>Puissdelivram</p>
+            <p id="puissDelivreeRam"></p>
+        </div>
+        <div>
+            <p>restsgeJour</p>
+            <p id="resTsgeJour"></p>
+        </div>
+        <div>
+            <p>resTBSJour</p>
+            <p id="resTbsJour"></p>
+        </div>
+        <div>
+            <p>resTsgeNuit</p>
+            <p id="resTsgeNuit"></p>
+        </div>
+        <div>
+            <p>restbsNuit</p>
+            <p id="resTbsNuit"></p>
+        </div>
+        <div>
+            <p>BrassagreelJour</p>
+            <p id="brassageReelJour"></p>
+        </div>
+        <div>
+            <p>brassagereelNuit</p>
+            <p id="brassageReelNuit"></p>
+        </div>
        
     </div>
     

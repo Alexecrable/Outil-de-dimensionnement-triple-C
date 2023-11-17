@@ -214,123 +214,256 @@ function calc_brassage_reel(qv, surface, hauteur){
     return (qv / (surface * hauteur));
 }
 
-//definition des valeurs de base
 
-let coefMajoration = 1.2; //coefficient de majoration 1,2 selon DTU 65.16
+function calculs(surfaceJour, surfaceNuit, hauteurJour, hauteurNuit, typeLogement){
 
-let surfaceJour = 84;
+    volume = calc_volume(surfaceJour, hauteurJour, surfaceNuit, hauteurNuit);
+    tauxBrassage = recherche(reglemThermique, tableaux.refGvBrass, 2);
+    debitAirZoneJour = calc_debit_air(surfaceJour, hauteurJour, tauxBrassage);
+    debitAirZoneNuit = calc_debit_air(surfaceNuit, hauteurNuit, tauxBrassage);
+    
+    g10 = recherche(reglemThermique, tableaux.refGvBrass, 1);
+    g11 = recherche(tempExt, tableaux.refTextTgse, 1);
+    g12 = recherche(tempInt, tableaux.refTinTbs, 1);
+    
+    puissanceJour = calc_puissance(surfaceJour, hauteurJour, g10, tempInt, tempExt);
+    puissanceNuit = calc_puissance(surfaceNuit, hauteurNuit, g10, tempInt, tempExt);
+    
+    g17 = recherche(longEquivFrigo, tableaux.corrTuyauChauff,1);
+    g18 = recherche(factDegivr, tableaux.corrDegivr, 1);
+    
+    
+    puissanceInstalle = calc_puissance_a_installer(puissanceJour, puissanceNuit, g17, g18, coefMajoration);
+    
+    ballonYutampo = recherche(typeLogement,tableaux.ecs,1);
+    
+    tailleGainJour = calc_taille_gain_jour(debitAirZoneJour, tableaux.tableauRAD);
+    
+    puissDelivGainJour = recherche(tailleGainJour,tableaux.tableauUnitPdispJour,2);
+    qvJour = recherche(tailleGainJour,tableaux.tableauRAD,3);
+    pressionSonoreJour = recherche(tailleGainJour,tableaux.tableauRAD,2);
+    
+    tailleGainNuit = recherche(tailleGainJour, tableaux.refRadJourNuit, 1);
+    
+    puissDelivGainNuit = recherche(tailleGainNuit,tableaux.tableauUnitPdispNuit,2);
+    qvNuit = recherche(tailleGainNuit,tableaux.tableauRAD,3);
+    pressionSonoreNuit = recherche(tailleGainNuit,tableaux.tableauRAD,2);
+    
+    groupeExtRam = recherche(tailleGainJour, tableaux.refRadGpeExt, 1);
+    puissDelivreeRam = recherche(groupeExtRam, tableaux.tableauRamPuissance,1);
+    
+    
+    
+    resTsgeJour = recherche(g11, tableaux.tableauResTgse, 1);
+    resTbsJour = recherche(g12, tableaux.tableauResTbs, 1);
+    
+    resTsgeNuit = recherche(g11, tableaux.tableauResTgse, 1);
+    resTbsNuit = recherche(g12, tableaux.tableauResTbs, 1);
+    
+    
+    brassageReelJour = calc_brassage_reel(qvJour, surfaceJour, hauteurJour);
+    brassageReelNuit = calc_brassage_reel(qvNuit, surfaceNuit, hauteurNuit);
+    
+    //verif accoustique
+    if(pressionSonoreJour > 35){
+        window.alert("attention accoustique jour !")
+    }
+    if(pressionSonoreNuit > 35){
+        window.alert("attention accoustique nuit !")
+    }
+    
+    //creation page web
+    
+    
+    
+    
+    
+    
+    console.log(
+        "volume : " + volume + "\n" +
+        "tauxBrassage : " + tauxBrassage + "\n" +
+        "debitAirZoneJour : " + debitAirZoneJour + "\n" +
+        "debitAirZoneNuit : " + debitAirZoneNuit + "\n" +
+        "g10 : " + g10 + "\n" +
+        "g11 : " + g11 + "\n" +
+        "g12 : " + g12 + "\n" +
+        "puissanceJour : " + puissanceJour + "\n" +
+        "puissanceNuit : " + puissanceNuit + "\n" +
+        "g17 : " + g17 + "\n" +
+        "g18 : " + g18 + "\n" +
+        "puissanceInstalle : " + puissanceInstalle + "\n" +
+        "ballonYutampo : " + ballonYutampo + "\n" +
+        "tailleGainJour : " + tailleGainJour + "\n" +
+        "puissDelivGainJour : " + puissDelivGainJour + "\n" +
+        "qvJour : " + qvJour + "\n" +
+        "pressionSonoreJour : " + pressionSonoreJour + "\n" +
+        "tailleGainNuit : " + tailleGainNuit + "\n" +
+        "puissDelivGainNuit : " + puissDelivGainNuit + "\n" +
+        "qvNuit : " + qvNuit + "\n" +
+        "pressionSonoreNuit : " + pressionSonoreNuit + "\n" +
+        "groupeExtRam : " + groupeExtRam + "\n" +
+        "puissDelivreeRam : " + puissDelivreeRam + "\n" +
+        "resTsgeJour : " + resTsgeJour + "\n" +
+        "resTbsJour : " + resTbsJour + "\n" +
+        "resTsgeNuit : " + resTsgeNuit + "\n" +
+        "resTbsNuit : " + resTbsNuit + "\n" +
+        "brassageReelJour : " + brassageReelJour + "\n" +
+        "brassageReelNuit : " + brassageReelNuit + "\n" 
+    );
 
-let surfaceNuit = 47;
+    document.querySelector("#Volume").textContent = volume;
+    document.querySelector("#tauxBrassage").textContent = tauxBrassage;
+    document.querySelector("#debitAirZoneJour").textContent = debitAirZoneJour;
+    document.querySelector("#debitAirZoneNuit").textContent = debitAirZoneNuit;
+    document.querySelector("#g10").textContent = g10;
+    document.querySelector("#g11").textContent = g11;
+    document.querySelector("#g12").textContent = g12;
+    document.querySelector("#puissanceJour").textContent = puissanceJour;
+    document.querySelector("#puissanceNuit").textContent = puissanceNuit;
+    document.querySelector("#g17").textContent = g17;
+    document.querySelector("#g18").textContent = g18;
+    document.querySelector("#puissanceInstalle").textContent = puissanceInstalle;
+    document.querySelector("#ballonYutampo").textContent = ballonYutampo;
+    document.querySelector("#tailleGainJour").textContent = tailleGainJour;
+    document.querySelector("#puissDelivGainJour").textContent = puissDelivGainJour;
+    document.querySelector("#qvJour").textContent = qvJour;
+    document.querySelector("#pressionSonoreJour").textContent = pressionSonoreJour;
+    document.querySelector("#tailleGainNuit").textContent = tailleGainNuit;
+    document.querySelector("#puissDelivGainNuit").textContent = puissDelivGainNuit;
+    document.querySelector("#qvNuit").textContent = qvNuit;
+    document.querySelector("#pressionSonoreNuit").textContent = pressionSonoreNuit;
+    document.querySelector("#groupeExtRam").textContent = groupeExtRam;
+    document.querySelector("#puissDelivreeRam").textContent = puissDelivreeRam;
+    document.querySelector("#resTsgeJour").textContent = resTsgeJour;
+    document.querySelector("#resTbsJour").textContent = resTbsJour;
+    document.querySelector("#resTsgeNuit").textContent = resTsgeNuit;
+    document.querySelector("#resTbsNuit").textContent = resTbsNuit;
+    document.querySelector("#brassageReelJour").textContent = brassageReelJour;
+    document.querySelector("#brassageReelNuit").textContent = brassageReelNuit;
 
-//zone liste
-let hauteurJour = 2.5;
-let hauteurNuit = 2.5;
-let typeLogement = "T4";
+}
 
-let reglemThermique = "RT2012";
-let tempExt = -4;
-let tempInt = 19;
+
+
+//initialisation 
 
 let longEquivFrigo = 25;
 let factDegivr = -5;
 
-
-//zone tableauxxxxx
-
+let coefMajoration = 1.2; //coefficient de majoration 1,2 selon DTU 65.16
 
 
+let surfaceJour;
 
-//calculs
-let volume = calc_volume(surfaceJour, hauteurJour, surfaceNuit, hauteurNuit);
-let tauxBrassage = recherche(reglemThermique, tableaux.refGvBrass, 2);
-let debitAirZoneJour = calc_debit_air(surfaceJour, hauteurJour, tauxBrassage);
-let debitAirZoneNuit = calc_debit_air(surfaceNuit, hauteurNuit, tauxBrassage);
+let surfaceNuit;
+let hauteurJour;
+let hauteurNuit;
 
-let g10 = recherche(reglemThermique, tableaux.refGvBrass, 1);
-let g11 = recherche(tempExt, tableaux.refTextTgse, 1);
-let g12 = recherche(tempInt, tableaux.refTinTbs, 1);
+let typeLogement;
 
-let puissanceJour = calc_puissance(surfaceJour, hauteurJour, g10, tempInt, tempExt);
-let puissanceNuit = calc_puissance(surfaceNuit, hauteurNuit, g10, tempInt, tempExt);
+let reglemThermique;
 
-let g17 = recherche(longEquivFrigo, tableaux.corrTuyauChauff,1);
-let g18 = recherche(factDegivr, tableaux.tableauResTgse, 1);
+let tempExt;
+let tempInt;
+////////////////
 
 
-let puissanceInstalle = calc_puissance_a_installer(puissanceJour, puissanceNuit, g17, g18, coefMajoration);
+let volume;
+let tauxBrassage;
+let debitAirZoneJour;
+let debitAirZoneNuit;
 
-let ballonYutampo = recherche(typeLogement,tableaux.ecs,1);
+let g10;
+let g11;
+let g12;
 
-let tailleGainJour = calc_taille_gain_jour(debitAirZoneJour, tableaux.tableauRAD);
+let puissanceJour;
+let puissanceNuit;
 
-let puissDelivGainJour = recherche(tailleGainJour,tableaux.tableauUnitPdispJour,2);
-let qvJour = recherche(tailleGainJour,tableaux.tableauRAD,3);
-let pressionSonoreJour = recherche(tailleGainJour,tableaux.tableauRAD,2);
+let g17;
+let g18;
 
-let tailleGainNuit = recherche(tailleGainJour, tableaux.refRadJourNuit, 1);
+let puissanceInstalle;
 
-let puissDelivGainNuit = recherche(tailleGainNuit,tableaux.tableauUnitPdispNuit,2);
-let qvNuit = recherche(tailleGainNuit,tableaux.tableauRAD,3);
-let pressionSonoreNuit = recherche(tailleGainNuit,tableaux.tableauRAD,2);
+let ballonYutampo;
 
-let groupeExtRam = recherche(tailleGainJour, tableaux.refRadGpeExt, 1);
-let puissDelivreeRam = recherche(groupeExtRam, tableaux.tableauRamPuissance,1);
+let tailleGainJour;
 
+let puissDelivGainJour;
+let qvJour;
+let pressionSonoreJour;
 
+let tailleGainNuit;
 
-let resTsgeJour = recherche(g11, tableaux.tableauResTgse, 1);
-let resTbsJour = recherche(g12, tableaux.tableauResTbs, 1);
+let puissDelivGainNuit;
+let qvNuit;
+let pressionSonoreNuit;
 
-let resTsgeNuit = recherche(g11, tableaux.tableauResTgse, 1);
-let resTbsNuit = recherche(g12, tableaux.tableauResTbs, 1);
-
-
-let brassageReelJour = calc_brassage_reel(qvJour, surfaceJour, hauteurJour);
-let brassageReelNuit = calc_brassage_reel(qvNuit, surfaceNuit, hauteurNuit);
-
-//verif accoustique
-if(pressionSonoreJour > 35){
-    window.alert("attention accoustique jour !")
-}
-if(pressionSonoreNuit > 35){
-    window.alert("attention accoustique nuit !")
-}
-
-//creation page web
+let groupeExtRam;
+let puissDelivreeRam;
 
 
+
+let resTsgeJour;
+let resTbsJour;
+
+let resTsgeNuit;
+let resTbsNuit;
+
+
+let brassageReelJour;
+let brassageReelNuit;
 
 
 
 
-console.log(
-    "volume : " + volume + "\n" +
-    "tauxBrassage : " + tauxBrassage + "\n" +
-    "debitAirZoneJour : " + debitAirZoneJour + "\n" +
-    "debitAirZoneNuit : " + debitAirZoneNuit + "\n" +
-    "g10 : " + g10 + "\n" +
-    "g11 : " + g11 + "\n" +
-    "g12 : " + g12 + "\n" +
-    "puissanceJour : " + puissanceJour + "\n" +
-    "puissanceNuit : " + puissanceNuit + "\n" +
-    "g17 : " + g17 + "\n" +
-    "g18 : " + g18 + "\n" +
-    "puissanceInstalle : " + puissanceInstalle + "\n" +
-    "ballonYutampo : " + ballonYutampo + "\n" +
-    "tailleGainJour : " + tailleGainJour + "\n" +
-    "puissDelivGainJour : " + puissDelivGainJour + "\n" +
-    "qvJour : " + qvJour + "\n" +
-    "pressionSonoreJour : " + pressionSonoreJour + "\n" +
-    "tailleGainNuit : " + tailleGainNuit + "\n" +
-    "puissDelivGainNuit : " + puissDelivGainNuit + "\n" +
-    "qvNuit : " + qvNuit + "\n" +
-    "pressionSonoreNuit : " + pressionSonoreNuit + "\n" +
-    "groupeExtRam : " + groupeExtRam + "\n" +
-    "puissDelivreeRam : " + puissDelivreeRam + "\n" +
-    "resTsgeJour : " + resTsgeJour + "\n" +
-    "resTbsJour : " + resTbsJour + "\n" +
-    "resTsgeNuit : " + resTsgeNuit + "\n" +
-    "resTbsNuit : " + resTbsNuit + "\n" +
-    "brassageReelJour : " + brassageReelJour + "\n" +
-    "brassageReelNuit : " + brassageReelNuit + "\n" 
+
+
+
+
+
+const buttonRes = document.querySelector("#CALCULATEUR");
+const results = document.querySelector("#Resultats");
+
+
+
+buttonRes.addEventListener(
+    "click",
+    ()=>{
+        surfaceJour = document.querySelector("#surfaceJour").value;
+        hauteurJour = document.querySelector("#hauteurJour").value;
+        surfaceNuit = document.querySelector("#surfaceNuit").value;
+        hauteurNuit = document.querySelector("#hauteurNuit").value;
+        typeLogement = document.querySelector("#typeLogement").value;
+        reglemThermique = document.querySelector("#reglemThermique").value;
+        tempExt = document.querySelector("#tempExt").value;
+        tempInt = document.querySelector("#tempInt").value;
+        if (surfaceJour === "" || surfaceNuit === ""){
+            window.alert("attention certaines valeurs n'ont pas été remplies");
+        }
+        else{
+            console.log(surfaceJour, surfaceNuit, hauteurJour, hauteurNuit, reglemThermique);
+            calculs(surfaceJour, surfaceNuit, hauteurJour, hauteurNuit, typeLogement);
+        }
+        
+    }   
 );
+
+//definition des valeurs de base
+
+
+
+
+
+//zone liste
+
+
+
+
+
+
+
+
+
+
+

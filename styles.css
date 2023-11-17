@@ -1,6 +1,7 @@
 *{
-    padding: 1em;
+    padding: 0.5em;
     color: white;
+    margin: 0.3em;
     
 }
 
@@ -21,6 +22,13 @@ header{
 }
 
 #inputter div{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+#inputter{
+    
     border: solid red;
     background-color: orange;
     
@@ -31,25 +39,10 @@ body{
     align-items: center;
 }
 
-button{
-    background-color: purple;
-    color: pink;
-    width: 20em;
-    border: dotted #66ff66;
-    transition: all 1s, 1s;
-}
-
-button:hover{
-    background-color: pink;
-    color: black;
-    width: 18em;
-    
-    
-}
 
 label{
-    text-decoration: underline solid red;
-    color: red;
+    
+    color: black;
 }
 
 input, select, option{
@@ -58,3 +51,42 @@ input, select, option{
     background-color: black;
 }
 
+
+button{
+    background-color: rgb(56, 55, 55);
+    color: white;
+    width: 15em;
+    border: solid blue;
+    transition: all 0.5s;
+    height: 2.7em;
+}
+
+button:hover{
+    font-weight: bold;
+    color: red;
+    height: 3.5em;
+    border: solid red;
+    
+}
+
+#Resultats{
+    border: solid rgb(0, 213, 228);
+    background-color: rgb(2, 36, 2);
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#Resultats div{
+    display: flex;
+    
+    border: solid red;
+    background-color: black;
+    margin: 0;
+}
+
+#Resultats>div>p+p{
+    border: solid purple;
+    background-color: yellow;
+    color: rgb(4, 14, 4);
+    font-weight: bolder;
+}
