@@ -150,23 +150,48 @@ const tableaux =
 
 
 function calc_volume (surfaceJour, hauteurJour, surfaceNuit, hauteurNuit) {//  m3
-    return (surfaceJour*hauteurJour) + (surfaceNuit * hauteurNuit);
+
+    let res = (surfaceJour*hauteurJour) + (surfaceNuit * hauteurNuit);
+    if (res === Math.floor(res)){
+        return res;
+    }
+    else{
+        return res.toFixed(2);
+    }
 }
 
 function calc_debit_air(surface, hauteur, tauxBrassage){//  m3/h
-    return (surface * hauteur * tauxBrassage);
+    let res = (surface * hauteur * tauxBrassage);
+    if (res === Math.floor(res)){
+        return res;
+    }
+    else{
+        return res.toFixed(2);
+    }
 }
 
 
 
 function calc_puissance(surface, hauteur, g10, tempInt, tempExt){// W
     
-    return surface * hauteur * g10 * (tempInt-tempExt);
+    let res = surface * hauteur * g10 * (tempInt-tempExt);
+    if (res === Math.floor(res)){
+        return res;
+    }
+    else{
+        return res.toFixed(2);
+    }
 }
 
 
 function calc_puissance_a_installer(puissanceJour, puissanceNuit, g17, g18, coefMajoration){//  W
-    return ((puissanceJour+puissanceNuit) / g17 / g18) * coefMajoration;
+    let res = ((puissanceJour+puissanceNuit) / g17 / g18) * coefMajoration;
+    if (res === Math.floor(res)){
+        return res;
+    }
+    else{
+        return res.toFixed(2);
+    }
 }
 
 
@@ -211,7 +236,14 @@ function calc_taille_gain_jour(debitAirZoneJour, tableauRAD){
 }
 
 function calc_brassage_reel(qv, surface, hauteur){
-    return (qv / (surface * hauteur));
+    let res = (qv / (surface * hauteur));
+
+    if (res === Math.floor(res)){
+        return res;
+    }
+    else{
+        return res.toFixed(2);
+    }
 }
 
 
