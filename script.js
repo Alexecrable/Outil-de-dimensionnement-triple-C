@@ -3,8 +3,8 @@
 const tableaux = 
 {
     "refRadJourNuit" : [
-        ["RAD-35RPE", "RAD-50RPE"],
-        ["RAD-35RPE", "RAD-50RPE"]
+        ["RAD-35RPE", "RAD-50RPE", "RAD-60RPE"],
+        ["RAD-35RPE", "RAD-50RPE", "RAD-60RPE"]
     ],
 
     "tableauUnitPdispNuit" : [
@@ -33,8 +33,8 @@ const tableaux =
     
 
     "refRadGpeExt" : [
-        ["RAD-35RPE", "RAD-50RPE"],
-        ["RAM-70NYP4E", "RAM-90NYP5E"]
+        ["RAD-35RPE", "RAD-50RPE", "RAD-60RPE"],
+        ["RAM-70NYP4E", "RAM-90NYP5E", "PLACEHOLDER"]
     ],
     
     "tableauResTgse" : [
@@ -203,6 +203,7 @@ function recherche(reference, tableau, indiceretour){
         }
     }
     window.alert("pas de ref trouvé pr " + reference);
+    console.log(reference,tableau);
     return 0;
 }
 
@@ -215,6 +216,7 @@ function recherche2(reference, tableau, tableau2){
         }
     }
     window.alert("pas de ref trouvé pr " + reference);
+    console.log(reference, tableau, tableau2);
     return 0;
 }
 
