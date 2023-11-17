@@ -16,7 +16,6 @@ html{
 
 header{
     display: flex;
-    flex-shrink: 1;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -25,11 +24,11 @@ header{
 
 #inputter div{
     display: flex;
-    flex-shrink: 1;
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
 }
+
 #inputter{
     
     border: solid red;
@@ -38,7 +37,6 @@ header{
 }
 body{
     display: flex;
-    flex-shrink: 1;
     flex-direction: column;
     align-items: center;
 }
@@ -77,13 +75,13 @@ button:hover{
     border: solid rgb(0, 213, 228);
     background-color: rgb(2, 36, 2);
     display: flex;
-    flex-shrink: 1;
+    flex-direction: column;
     flex-wrap: wrap;
 }
 
 #Resultats div{
     display: flex;
-    flex-shrink: 1;
+    
     border: solid red;
     background-color: black;
     margin: 0;
